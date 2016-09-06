@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://devsrv:5432/nark
+    username: spark
+    password: spark
+liquibase:
+  change-log: classpath:/db/changelog/db.changelog-master.xml

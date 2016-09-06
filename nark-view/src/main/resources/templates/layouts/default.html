@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" th:href="@{/webjars/normalize.css/3.0.2/normalize.css}" type="text/css" media="screen,print" />
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" type="text/css" media="screen,print" />
+  <link rel="stylesheet" th:href="@{/css/layout.css}" type="text/css" media="screen,print" />
+  <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+  <title>nark</title>
+</head>
+<body>
+  <div class="container">
+    <div class="col-sm-12" sec:authorize="isAuthenticated()">
+      <div class="pull-right">
+        <form th:action="@{/logout}" method="post">
+          <input type="submit" value="ログアウト" class="btn btn-link" />
+        </form>
+      </div>
+    </div>
+    <div layout:fragment="content"></div>
+  </div>
+</body>
+</html>
