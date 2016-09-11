@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +25,12 @@ import lombok.ToString;
 public class User implements Serializable {
 
     @Id
+    @NotNull
+    @NotBlank
     private String username;
 
+    @NotNull
+    @NotBlank
     private String password;
 
     private boolean enabled;

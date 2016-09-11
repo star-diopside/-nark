@@ -53,6 +53,7 @@ subprojects {
 project("nark-data") {
     dependencies {
         compile "org.springframework.boot:spring-boot-starter-data-jpa"
+        compile "org.hibernate:hibernate-validator"
     }
 }
 

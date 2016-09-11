@@ -4,5 +4,9 @@ spring:
     url: jdbc:postgresql://devsrv:5432/nark
     username: spark
     password: spark
+  messages:
+    basename: messages, ValidationMessages
+security:
+  filter-dispatcher-types: ASYNC, FORWARD, REQUEST
 liquibase:
   change-log: classpath:/db/changelog/db.changelog-master.xml
