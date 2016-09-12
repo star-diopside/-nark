@@ -1,0 +1,8 @@
+rootProject.name = "nark"
+
+include "nark-data"
+include "nark-service"
+include "nark-controller"
+include "nark-view"
+include "nark-web"
+include "nark-user-registration"
