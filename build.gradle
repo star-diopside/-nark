@@ -26,7 +26,11 @@ allprojects {
 
 subprojects {
     apply plugin: "java"
+    apply plugin: "maven"
     apply plugin: "io.spring.dependency-management"
+    apply plugin: "checkstyle"
+    apply plugin: "findbugs"
+    apply plugin: "jacoco"
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -47,6 +51,27 @@ subprojects {
         imports {
             mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
         }
+    }
+
+    checkstyle {
+        toolVersion "7.1.1"
+        configFile file("${rootDir}/config/checkstyle/checkstyle.xml")
+        ignoreFailures true
+    }
+
+    findbugs {
+        toolVersion = "3.0.1"
+    }
+
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+
+    jacoco {
+        toolVersion = "0.7.7.201606060606"
     }
 }
 
