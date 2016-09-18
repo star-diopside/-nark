@@ -8,9 +8,8 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -26,16 +25,27 @@ import lombok.ToString;
 @ToString(exclude = "user")
 @Entity
 @EntityListeners(TrackableListener.class)
-@Table(name = "authorities")
-@IdClass(AuthorityId.class)
+@Table(name = "login_users")
 @SuppressWarnings("serial")
-public class Authority implements Trackable, Serializable {
+public class LoginUser implements Trackable, Serializable {
 
     @Id
     private String username;
 
-    @Id
-    private String authority;
+    @Column(name = "login_error_count")
+    private int loginErrorCount;
+
+    @Column(name = "lockout_at")
+    @Convert(converter = LocalDateTimeConverter.class)
+    private LocalDateTime lockoutAt;
+
+    @Column(name = "last_login_at")
+    @Convert(converter = LocalDateTimeConverter.class)
+    private LocalDateTime lastLoginAt;
+
+    @Column(name = "logout_at")
+    @Convert(converter = LocalDateTimeConverter.class)
+    private LocalDateTime logoutAt;
 
     @Column(name = "created_at")
     @Convert(converter = LocalDateTimeConverter.class)
@@ -54,7 +64,7 @@ public class Authority implements Trackable, Serializable {
     @Version
     private int version;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "username", insertable = false, updatable = false)
     private User user;
 

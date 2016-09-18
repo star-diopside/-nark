@@ -45,6 +45,6 @@ public class UserRegistration implements CommandLineRunner {
             return String.valueOf(console.readPassword("パスワード: "));
         });
 
-        userService.createUser(username, () -> password, authority);
+        userService.create(username, () -> password, username, authority);
     }
 }

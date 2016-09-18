@@ -10,11 +10,12 @@ buildscript {
 
 allprojects {
     group = "jp.gr.java_conf.star_diopside.nark"
-    version = "1.0-SNAPSHOT"
+    version = "1.0.0-SNAPSHOT"
 
     ext {
         lombokVersion = "1.16.10"
 
+        sparkCommonsVersion = "1.0.0-SNAPSHOT"
         springBootVersion = "1.4.0.RELEASE"
         commonsCliVersion = "1.3.1"
         postgresqlVersion = "9.4.1209"
@@ -41,6 +42,7 @@ subprojects {
 
     repositories {
         jcenter()
+        mavenLocal()
     }
 
     dependencies {
@@ -53,14 +55,20 @@ subprojects {
         }
     }
 
+    javadoc {
+        options.charSet = "UTF-8"
+        options.encoding = "UTF-8"
+    }
+
     checkstyle {
-        toolVersion "7.1.1"
-        configFile file("${rootDir}/config/checkstyle/checkstyle.xml")
-        ignoreFailures true
+        toolVersion = "7.1.1"
+        configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+        ignoreFailures = true
     }
 
     findbugs {
         toolVersion = "3.0.1"
+        ignoreFailures = true
     }
 
     tasks.withType(FindBugs) {
@@ -73,11 +81,28 @@ subprojects {
     jacoco {
         toolVersion = "0.7.7.201606060606"
     }
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = "sources"
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = "javadoc"
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
 }
 
 project("nark-data") {
     dependencies {
+        compile "jp.gr.java_conf.star_diopside.spark.commons:spark-commons-data:${sparkCommonsVersion}"
         compile "org.springframework.boot:spring-boot-starter-data-jpa"
+        compile "org.springframework.security:spring-security-core"
         compile "org.hibernate:hibernate-validator"
     }
 }
@@ -85,7 +110,6 @@ project("nark-data") {
 project("nark-service") {
     dependencies {
         compile project(":nark-data")
-        compile "org.springframework.security:spring-security-core"
     }
 }
 
@@ -123,6 +147,7 @@ project("nark-user-registration") {
     dependencies {
         compile project(":nark-service")
         compile "commons-cli:commons-cli:${commonsCliVersion}"
+        runtime "org.apache.tomcat.embed:tomcat-embed-el"
         runtime "org.postgresql:postgresql:${postgresqlVersion}"
     }
 }
