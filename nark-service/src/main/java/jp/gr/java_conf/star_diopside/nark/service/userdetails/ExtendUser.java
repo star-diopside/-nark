@@ -22,7 +22,8 @@ public class ExtendUser extends org.springframework.security.core.userdetails.Us
     private LocalDateTime logoutAt;
 
     public ExtendUser(User user) {
-        super(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true,
+        super(user.getUsername(), user.getPassword(), user.isEnabled(), true, true,
+                user.getLoginUser() == null ? true : user.getLoginUser().getLockoutAt() == null,
                 AuthorityUtils.NO_AUTHORITIES);
         this.displayName = user.getDisplayName();
         LoginUser loginUser = user.getLoginUser();
@@ -33,8 +34,8 @@ public class ExtendUser extends org.springframework.security.core.userdetails.Us
     }
 
     public ExtendUser(UserDetails user, ExtendUserDetails extendUser) {
-        super(user.getUsername(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(),
-                user.isCredentialsNonExpired(), user.isAccountNonLocked(), user.getAuthorities());
+        super(user.getUsername(), user.getPassword(), user.isEnabled(), extendUser.isAccountNonExpired(),
+                extendUser.isCredentialsNonExpired(), extendUser.isAccountNonLocked(), user.getAuthorities());
         this.displayName = extendUser.getDisplayName();
         this.lastLoginAt = extendUser.getLastLoginAt();
         this.logoutAt = extendUser.getLogoutAt();

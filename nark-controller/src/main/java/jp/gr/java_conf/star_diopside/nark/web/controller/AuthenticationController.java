@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
@@ -32,7 +34,7 @@ import jp.gr.java_conf.star_diopside.nark.web.form.LoginForm;
 public class AuthenticationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
-    private static final Map<String, String> EXCEPTION_MAP;
+    private static final Map<String, String> EXCEPTION_MESSAGES;
 
     @Autowired
     private MessageSourceAccessor messages;
@@ -41,7 +43,9 @@ public class AuthenticationController {
         HashMap<String, String> map = new HashMap<>();
         map.put(BadCredentialsException.class.getName(), "error.badCredentials");
         map.put(UsernameNotFoundException.class.getName(), "error.badCredentials");
-        EXCEPTION_MAP = Collections.unmodifiableMap(map);
+        map.put(DisabledException.class.getName(), "error.accountDisabled");
+        map.put(LockedException.class.getName(), "error.accountLocked");
+        EXCEPTION_MESSAGES = Collections.unmodifiableMap(map);
     }
 
     @InitBinder
@@ -53,7 +57,7 @@ public class AuthenticationController {
     public String create(@ModelAttribute("form") LoginForm form, ModelMap model, Errors errors) {
         Exception exception = (Exception) model.get(WebAttributes.AUTHENTICATION_EXCEPTION);
         if (exception != null) {
-            String errorCode = EXCEPTION_MAP.get(exception.getClass().getName());
+            String errorCode = EXCEPTION_MESSAGES.get(exception.getClass().getName());
             if (errorCode != null) {
                 errors.reject(errorCode);
             } else {
