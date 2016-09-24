@@ -1,0 +1,6 @@
+machine:
+  java:
+    version: oraclejdk8
+dependencies:
+  pre:
+    - ./ci/scripts/install_repository.sh
