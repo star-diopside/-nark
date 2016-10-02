@@ -131,13 +131,37 @@ project("nark-view") {
 }
 
 project("nark-web") {
-    apply plugin: "spring-boot"
-
     dependencies {
         compile project(":nark-controller")
         compile project(":nark-view")
         compile "org.liquibase:liquibase-core"
+    }
+}
+
+project("nark-web-embed") {
+    apply plugin: "spring-boot"
+
+    dependencies {
+        compile project(":nark-web")
         runtime "org.postgresql:postgresql:${postgresqlVersion}"
+    }
+
+    bootRepackage {
+        mainClass = "jp.gr.java_conf.star_diopside.nark.Server"
+    }
+}
+
+project("nark-web-war") {
+    apply plugin: "war"
+
+    dependencies {
+        compile project(":nark-web")
+        providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
+        providedRuntime "org.postgresql:postgresql:${postgresqlVersion}"
+    }
+
+    war {
+        archiveName = "nark-web.war"
     }
 }
 

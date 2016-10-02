@@ -4,3 +4,8 @@ spring:
     url: jdbc:postgresql://ubuntu:5432/nark
     username: spark
     password: spark
+  thymeleaf:
+    cache: false
+logging:
+  level:
+    jp.gr.java_conf.star_diopside.nark: debug

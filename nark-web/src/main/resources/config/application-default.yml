@@ -1,6 +1,0 @@
-spring:
-  thymeleaf:
-    cache: false
-logging:
-  level:
-    jp.gr.java_conf.star_diopside.nark: debug

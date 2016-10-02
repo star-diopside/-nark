@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    jndi-name: java:comp/env/jdbc/dataSource
+  thymeleaf:
+    cache: false
+logging:
+  level:
+    jp.gr.java_conf.star_diopside.nark: debug
