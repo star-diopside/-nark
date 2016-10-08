@@ -17,7 +17,7 @@ import javax.persistence.Version;
 
 import jp.gr.java_conf.star_diopside.nark.data.support.Trackable;
 import jp.gr.java_conf.star_diopside.nark.data.support.TrackableListener;
-import jp.gr.java_conf.star_diopside.spark.commons.data.converter.LocalDateTimeConverter;
+import jp.gr.java_conf.star_diopside.silver.commons.data.converter.LocalDateTimeConverter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
