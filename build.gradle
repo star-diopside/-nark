@@ -128,6 +128,9 @@ project("nark-web") {
     dependencies {
         compile project(":nark-controller")
         compile project(":nark-view")
+        compile("org.springframework.session:spring-session") {
+            exclude group: "commons-logging", module: "commons-logging"
+        }
         compile "org.liquibase:liquibase-core"
     }
 }

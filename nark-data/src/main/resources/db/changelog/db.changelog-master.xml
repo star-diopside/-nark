@@ -86,4 +86,42 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="3" author="se-yoshi">
+        <createTable tableName="spring_session">
+            <column name="session_id" type="char(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="creation_time" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_access_time" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="max_inactive_interval" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="principal_name" type="varchar(100)" />
+        </createTable>
+        <createIndex tableName="spring_session" indexName="spring_session_ix1">
+            <column name="last_access_time" />
+        </createIndex>
+        <createTable tableName="spring_session_attributes">
+            <column name="session_id" type="char(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="attribute_name" type="varchar(200)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="attribute_bytes" type="blob" />
+        </createTable>
+        <addForeignKeyConstraint constraintName="spring_session_attributes_fk"
+            baseTableName="spring_session_attributes" baseColumnNames="session_id"
+            referencedTableName="spring_session" referencedColumnNames="session_id"
+            onDelete="CASCADE" />
+        <createIndex tableName="spring_session_attributes"
+            indexName="spring_session_attributes_ix1">
+            <column name="session_id" />
+        </createIndex>
+    </changeSet>
+
 </databaseChangeLog>

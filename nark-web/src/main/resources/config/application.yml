@@ -1,6 +1,8 @@
 spring:
   messages:
     basename: messages, ValidationMessages
+  session:
+    store-type: jdbc
 security:
   filter-dispatcher-types: ASYNC, FORWARD, REQUEST
 liquibase:
