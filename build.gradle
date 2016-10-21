@@ -23,6 +23,7 @@ subprojects {
     apply plugin: "java"
     apply plugin: "maven"
     apply plugin: "io.spring.dependency-management"
+    apply plugin: "eclipse-wtp"
     apply plugin: "checkstyle"
     apply plugin: "findbugs"
     apply plugin: "jacoco"
@@ -92,7 +93,7 @@ subprojects {
     }
 }
 
-project("nark-data") {
+project(":nark-data") {
     dependencies {
         compile "jp.gr.java_conf.star_diopside.silver.commons:silver-commons-data:${silverCommonsVersion}"
         compile "org.springframework.boot:spring-boot-starter-data-jpa"
@@ -101,13 +102,13 @@ project("nark-data") {
     }
 }
 
-project("nark-service") {
+project(":nark-service") {
     dependencies {
         compile project(":nark-data")
     }
 }
 
-project("nark-controller") {
+project(":nark-controller") {
     dependencies {
         compile project(":nark-service")
         compile "org.springframework.boot:spring-boot-starter-web"
@@ -115,7 +116,7 @@ project("nark-controller") {
     }
 }
 
-project("nark-view") {
+project(":nark-view") {
     dependencies {
         compile "org.springframework.boot:spring-boot-starter-thymeleaf"
         compile "org.thymeleaf.extras:thymeleaf-extras-springsecurity4"
@@ -124,7 +125,7 @@ project("nark-view") {
     }
 }
 
-project("nark-web") {
+project(":nark-web") {
     dependencies {
         compile project(":nark-controller")
         compile project(":nark-view")
@@ -135,7 +136,7 @@ project("nark-web") {
     }
 }
 
-project("nark-web-embed") {
+project(":nark-web-embed") {
     apply plugin: "spring-boot"
 
     dependencies {
@@ -148,7 +149,7 @@ project("nark-web-embed") {
     }
 }
 
-project("nark-web-war") {
+project(":nark-web-war") {
     apply plugin: "war"
 
     dependencies {
@@ -160,9 +161,18 @@ project("nark-web-war") {
     war {
         archiveName = "nark-web.war"
     }
+
+    eclipse {
+        wtp {
+            facet {
+                facet name: "jst.web", version: "3.1"
+                facet name: "wst.jsdt.web", version: "1.0"
+            }
+        }
+    }
 }
 
-project("nark-user-registration") {
+project(":nark-user-registration") {
     apply plugin: "spring-boot"
 
     dependencies {
