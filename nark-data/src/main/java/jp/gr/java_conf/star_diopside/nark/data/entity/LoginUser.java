@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
@@ -13,9 +12,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import jp.gr.java_conf.star_diopside.nark.data.support.Trackable;
-import jp.gr.java_conf.star_diopside.nark.data.support.TrackableListener;
-import jp.gr.java_conf.star_diopside.silver.commons.data.converter.LocalDateTimeConverter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,10 +26,10 @@ import lombok.ToString;
 @Setter
 @ToString(exclude = "user")
 @Entity
-@EntityListeners(TrackableListener.class)
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "login_users")
 @SuppressWarnings("serial")
-public class LoginUser implements Trackable, Serializable {
+public class LoginUser implements Serializable {
 
     @Id
     private String username;
@@ -36,28 +38,27 @@ public class LoginUser implements Trackable, Serializable {
     private int loginErrorCount;
 
     @Column(name = "lockout_at")
-    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime lockoutAt;
 
     @Column(name = "last_login_at")
-    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime lastLoginAt;
 
     @Column(name = "logout_at")
-    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime logoutAt;
 
+    @CreatedDate
     @Column(name = "created_at")
-    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime createdAt;
 
+    @CreatedBy
     @Column(name = "created_by")
     private String createdBy;
 
+    @LastModifiedDate
     @Column(name = "updated_at")
-    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime updatedAt;
 
+    @LastModifiedBy
     @Column(name = "updated_by")
     private String updatedBy;
 

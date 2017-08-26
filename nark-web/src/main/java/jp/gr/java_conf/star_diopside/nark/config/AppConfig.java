@@ -7,6 +7,7 @@ import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,8 @@ import org.springframework.transaction.interceptor.RuleBasedTransactionAttribute
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 @Configuration
+@EntityScan(basePackages = { "jp.gr.java_conf.star_diopside.nark.data.entity",
+        "org.springframework.data.jpa.convert.threeten" })
 public class AppConfig {
 
     @Autowired

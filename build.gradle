@@ -13,7 +13,6 @@ allprojects {
     version = "1.0.0-SNAPSHOT"
 
     ext {
-        silverCommonsVersion = "1.0.0-SNAPSHOT"
         normalizeCssVersion = "3.0.2"
         bootstrapVersion = "3.3.7-1"
     }
@@ -95,7 +94,6 @@ subprojects {
 
 project(":nark-data") {
     dependencies {
-        compile "jp.gr.java_conf.star_diopside.silver.commons:silver-commons-data:${silverCommonsVersion}"
         compile "org.springframework.boot:spring-boot-starter-data-jpa"
         compile "org.springframework.security:spring-security-core"
         compile "org.hibernate:hibernate-validator"
